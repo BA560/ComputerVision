@@ -1,0 +1,244 @@
+Coin:            Measurement [mm]:         Measurement [px]:
+
+Referenz         25,00mm                            703,9 px
+2€               25,71mm                            726,4 px
+1€               23,17mm                            654,3 px
+0,50€            24,15mm                            677,8 px
+0,20€            22,14mm                            626,4 px
+0,10€            19,64mm                            551,8 px
+0,05€            21,26mm                            598,8 px
+0,02€            18,76mm                            530,3 px
+0,01€            16,27mm                            457,9 px
+
+Kopie mit Bildmessungen - 27.10.2026
+============================================================
+Die mm-Werte stammen unverändert aus Coins_masurements.txt.
+Die px-Spalte oben enthält den Mittelwert der beiden Aufnahmen je Münzwert.
+Für die Referenz liegt genau eine Aufnahme vor.
+
+Einzelmessungen in der nativen Bildauflösung (2592 x 1944 px):
+
+Bilddatei                 D außen [px]  Ellipse klein [px]  Ellipse groß [px]
+------------------------------------------------------------------------------
+0_01€_1.bmp                      458,3               456,9              457,9
+0_01€_2.bmp                      457,4               456,0              457,1
+0_02€_1.bmp                      529,9               528,7              529,2
+0_02€_2.bmp                      530,7               528,4              529,4
+0_05€_1.bmp                      599,4               597,9              598,7
+0_05€_2.bmp                      598,3               597,2              597,9
+0_10€_1.bmp                      552,5               550,4              550,9
+0_10€_2.bmp                      551,1               549,2              549,7
+0_20€_1.bmp                      627,3               624,1              625,5
+0_20€_2.bmp                      625,4               622,1              623,2
+0_50€_1.bmp                      678,5               675,9              677,0
+0_50€_2.bmp                      677,1               675,2              675,8
+1€_1.bmp                         654,7               652,5              652,6
+1€_2.bmp                         653,9               651,4              652,4
+2€_1.bmp                         727,0               724,9              725,7
+2€_2.bmp                         725,8               723,8              724,2
+Referenz_1.bmp                   703,9               702,7              703,0
+
+Messdefinition und Verfahren
+-----------------------------
+D außen ist der maximale Feret-Durchmesser: der größte euklidische Abstand
+zweier Punkte des äußeren Bildumrisses. Innenringe und Prägung zählen nicht.
+Auch die 20-Cent-Münze wird am äußeren Umriss statt über ihre Fläche gemessen.
+Die Ellipsenachsen sind zusätzliche Vergleichsmaße, nicht die Hauptmessung.
+
+Verarbeitung: Graustufen, Gaußfilter 5 x 5 (sigma = 0,8 px), Otsu-Schwelle,
+größtes äußeres Objekt. Entlang 4096 radialer Profile wird der äußere
+Dunkel-Hell-Übergang mit 0,125-px-Abtastung und linearer Interpolation
+lokalisiert. Der maximale Abstand wird auf der konvexen Hülle berechnet.
+Messung direkt in den Originalbildern, ohne Skalierung oder geometrische
+Entzerrung. Die Kontrollbilder werden nur zur Darstellung verkleinert.
+
+Die Nachkommastelle beschreibt die numerische Auswertung, keine garantierte
+Messgenauigkeit von 0,1 px. Als Empfindlichkeitsprüfung wurde die
+Otsu-Schwelle um jeweils 15 Graustufen verändert. Die resultierenden
+Durchmesser-Spannen stehen unten; sie sind kein Konfidenzintervall und
+enthalten weder Objektivverzeichnung noch Perspektivfehler.
+
+Bilddatei                  D bei T-15 [px]   D bei T+15 [px]
+------------------------------------------------------------
+0_01€_1.bmp                          457,5             459,0
+0_01€_2.bmp                          456,4             458,7
+0_02€_1.bmp                          529,2             530,6
+0_02€_2.bmp                          529,0             532,4
+0_05€_1.bmp                          598,5             600,2
+0_05€_2.bmp                          597,4             599,5
+0_10€_1.bmp                          551,4             553,5
+0_10€_2.bmp                          549,9             552,7
+0_20€_1.bmp                          626,5             628,1
+0_20€_2.bmp                          624,4             626,3
+0_50€_1.bmp                          677,6             679,7
+0_50€_2.bmp                          675,8             679,7
+1€_1.bmp                             653,9             655,4
+1€_2.bmp                             652,7             657,3
+2€_1.bmp                             726,3             727,8
+2€_2.bmp                             724,6             726,9
+Referenz_1.bmp                       703,1             704,6
+
+Zuordnung: _1 und _2 bezeichnen die zugehörigen Bilddateien; der Mittelwert
+ist eine Zusammenfassung zweier Aufnahmen an verschiedenen Bildpositionen.
+Er ist keine zusätzliche Einzelmessung und kein Nachweis der Wiederholgenauigkeit.
+Alle 17 Einzelobjekte wurden vollständig im Bild erfasst. Besonders nah am
+Rand liegen 1€_2.bmp (3 px) und 0_01€_2.bmp (8 px), bezogen auf die Binärkontur.
+
+Kontrollbilder und ausführliche Ordneranalyse: measurement_results/
+Reproduzieren: /usr/bin/python3 CV_lab/Pictures/measurement_results/measure_diameters.py
+Abhängigkeiten: numpy, cv2 (OpenCV), PIL (Pillow); Randvergleich zusätzlich matplotlib.
+Verfahrensreferenz: https://docs.opencv.org/4.x/dd/d49/tutorial_py_contour_features.html
+
+
+VERGLEICH DER MESSREIHEN _1 UND _2 / BILDRANDANALYSE
+====================================================
+Auswertung: 28.10.2026
+
+Kurzbefund
+----------
+Ja, zwischen _1 und _2 gibt es einen kleinen gemessenen Größenunterschied.
+Der äußere Durchmesser ist in 7 von 8 Paaren am linken Rand kleiner.
+Mittelwert: -1,015 px bzw. -0,164 %.
+Dies ist ein Hinweis auf eine positionsabhängige Größen-/Messabweichung.
+Eine ausschließlich durch die Linse verursachte Verzeichnung ist mit diesen
+Aufnahmen nicht eindeutig nachgewiesen. Die Wahl des Bildrandschwellenwerts
+hat einen Einfluss derselben Größenordnung. Eine optische Mitursache bleibt möglich.
+
+1. Paarvergleich der ursprünglichen Messwerte
+----------------------------------------------
+Differenz = D(_2) - D(_1); relativ = 100 * (D(_2) / D(_1) - 1).
+Negative Werte bedeuten: kleinere Abbildung in _2. Berechnung aus den
+ungerundeten JSON-Werten; zusätzliche Stellen dienen dem Zahlenvergleich.
+
+Münze         D_1 [px]    D_2 [px]   Delta [px]    Delta [%]
+-------------------------------------------------------------
+0,01€           458,29      457,44        -0,84       -0,184
+0,02€           529,94      530,66        +0,72       +0,136
+0,05€           599,36      598,30        -1,06       -0,177
+0,10€           552,51      551,10        -1,41       -0,256
+0,20€           627,35      625,42        -1,93       -0,308
+0,50€           678,55      677,05        -1,49       -0,220
+1€              654,73      653,89        -0,83       -0,127
+2€              727,03      725,76        -1,27       -0,174
+
+Median der relativen Änderungen: -0,180 %.
+Streuung über die acht Paare (Stichproben-SD): 0,133 Prozentpunkte.
+Dies ist eine deskriptive Streuung, keine Wiederholgenauigkeit oder Messunsicherheit.
+Größte Abnahme: 20 Cent mit -1,93 px bzw. -0,308 %.
+Ausnahme: 2 Cent mit +0,72 px bzw. +0,136 % im äußeren Maximaldurchmesser.
+Die Referenz hat keine _2-Aufnahme und wird nicht als weiteres Paar gewertet.
+Der Mittelwert ist das ungewichtete Mittel der acht relativen Paaränderungen.
+
+2. Zusammenhang mit der Bildposition
+---------------------------------------
+Als geometrische Bildmitte wird (1295,5; 971,5) px verwendet.
+Sie ist eine Näherung und kein kalibrierter optischer Hauptpunkt.
+r bezeichnet den Abstand der Münzmitte von dieser Bildmitte.
+
+Münze         x_2 [px]    y_2 [px]    r_1 [px]    r_2 [px]
+------------------------------------------------------------
+0,01€            243,1       236,0         3,5      1284,0
+0,02€            293,3       308,5        32,2      1201,7
+0,05€            323,9       329,7        40,9      1164,5
+0,10€            294,3       745,3        32,2      1026,4
+0,20€            350,0      1493,6        24,6      1080,1
+0,50€            358,5       487,0        42,6      1054,8
+1€               330,2       883,5        23,3       969,3
+2€               377,6       909,3        31,2       920,0
+
+_1 liegt zentral (r etwa 4 bis 43 px); _2 liegt links außen (r etwa 920 bis 1284 px).
+Es wurden somit Zentrum und linker Rand verglichen. Für den rechten Rand
+und ein flächendeckendes Verzeichnungsfeld fehlen entsprechende Einzelbilder.
+Innerhalb der Randaufnahmen wird die Abnahme nicht eindeutig größer, wenn r wächst.
+Korrelation zwischen r_2² und relativer Änderung des Ellipsen-Mittels: +0,177 (nur 8 Paare).
+Daraus lässt sich keine belastbare radiale Verzeichnungskurve bestimmen.
+
+3. Kontrollen der Messmethode
+------------------------------
+a) Ellipsen-Mittel = (kleine Achse + große Achse) / 2.
+   Dieses Vergleichsmaß nutzt den ganzen Rand und reagiert weniger auf
+   einzelne Spitzen als der maximale Feret-Durchmesser. Es ist bei der
+   gekerbten 20-Cent-Münze kein nomineller physischer Außendurchmesser.
+   Mittlere Änderung: -0,977 px / -0,161 %.
+   Alle acht Vorzeichen sind negativ. Bei 2 Cent beträgt die Differenz
+   jedoch nur -0,057 px und ist allein kein belastbarer Einzelbefund.
+
+b) Lokale Kontrastkontrolle:
+   Je radialem Profil werden Innen- und Hintergrundhelligkeit 6-12 px
+   vom ursprünglichen Rand entfernt geschätzt. Ihr Mittelwert ersetzt
+   die globale Schwelle. Danach werden Feret und Ellipsen-Mittel neu bestimmt.
+   Mittlere Änderung Feret: -0,094 %;
+   mittlere Änderung Ellipsen-Mittel: -0,138 %.
+   Das Ellipsen-Mittel bleibt in allen Paaren kleiner; die 2-Cent-Differenz
+   liegt dabei praktisch bei null. Beim Maximaldurchmesser wechseln
+   einzelne Vorzeichen. Ein einzelner Randpunkt kann das Maximum beeinflussen.
+
+c) Gemeinsame absolute Grauwertschwelle in allen Bildern:
+   Es werden dieselben Schwellen T=140,145,...,180 auf alle Bilder angewendet.
+   Die nachfolgende Spanne ist ein Methodenvergleich, kein Konfidenzintervall.
+   Der gleiche absolute Schwellwert garantiert bei unterschiedlicher lokaler
+   Helligkeit noch keine identische physische Randlage.
+
+     T    Mittel Delta Feret [%]    Mittel Delta Ellipse [%]
+--------------------------------------------------------------
+   140                    -0,227                      -0,226
+   145                    -0,208                      -0,206
+   150                    -0,189                      -0,186
+   155                    -0,171                      -0,165
+   160                    -0,146                      -0,144
+   165                    -0,076                      -0,123
+   170                    -0,035                      -0,101
+   175                    +0,004                      -0,080
+   180                    +0,039                      -0,058
+
+   Der mittlere Feret-Effekt kann mit der Schwelle sogar sein Vorzeichen wechseln.
+   Die negative Änderung des Ellipsen-Mittels bleibt als Tendenz erhalten,
+   ihre Größe hängt aber ebenfalls von der Randdefinition ab.
+
+d) Formabweichung:
+   Mittleres Achsenverhältnis, ausgedrückt als 100*(groß/klein-1):
+   _1: 0,127 %; _2: 0,140 %.
+   Die Münzen bleiben annähernd kreisförmig. Es zeigt sich keine starke,
+   über alle Münzen konsistente zusätzliche Elliptizität am Rand.
+   Das schließt eine kleine geometrische Verzeichnung nicht aus.
+
+4. Einordnung und Grenzen
+-------------------------
+Der Datensatz zeigt eine kleine positionsassoziierte Größen-/Messabweichung
+von ungefähr 0,1 bis 0,2 % im Mittel, abhängig von der Messdefinition.
+Dies ist mit einer schwachen Randverzeichnung vereinbar, identifiziert aber
+deren Ursache und Typ nicht eindeutig. Insbesondere sind Tonnen- oder
+Kissenverzeichnung und Verzeichnungskoeffizienten hieraus nicht sicher bestimmbar.
+
+Alternative beziehungsweise zusätzliche Einflüsse sind Beleuchtung und
+Farbsäume am Objektrand, Schwellenwahl, Münzseite/-drehung, perspektivischer
+Maßstab bei einer nicht exakt parallelen Messebene, Objekt-/Kamerabewegung
+und mögliche Einstellungs- oder Höhenänderungen. Für jede Münze liegt pro
+Position nur ein Bild vor; diese Einflüsse sind nicht durch Wiederholungen getrennt.
+
+Zur Größenordnung: Mit der zentralen 25-mm-Referenz entsprechen rund 28,16 px
+einem Millimeter. Die mittlere Feret-Abnahme von etwa 1,01 px entspricht
+rechnerisch etwa 0,036 mm, die größte beobachtete Abnahme etwa 0,069 mm.
+Das dient nur zur Orientierung und ist keine korrigierte metrische Kalibrierung.
+
+5. Nächster Schritt für einen belastbaren Verzeichnungsnachweis
+------------------------------------------------------------
+- Dieselbe flache Referenz bei unverändertem Fokus, Abstand, Belichtung und
+  Orientierung auf einem Raster über die gesamte Messebene aufnehmen.
+- Mitte, alle vier Ränder und Ecken abdecken; pro Position mindestens drei
+  unabhängige Wiederholungen erstellen und die Referenzhöhe konstant halten.
+- Zusätzlich ein Muster mit bekannten Maßen in mehreren Lagen aufnehmen
+  und Kameramatrix sowie Verzeichnungsparameter kalibrieren. Die metrische
+  Ebenenabbildung separat prüfen, damit Perspektive nicht als Linsenfehler gilt.
+- Positionsabhängige Maßabweichung vor und nach der Korrektur auf unabhängigen
+  Kontrollaufnahmen vergleichen. Erst danach eine Ortskorrektur übernehmen.
+
+Die bestehenden Pixeldurchmesser und Mittelwerte wurden nicht nachträglich
+korrigiert. Ein globaler Korrekturfaktor aus diesen acht Paaren wäre nicht belegt.
+
+Abbildung: measurement_results/edge_distortion_analysis.png
+Ungerundete Paare und Kontrollmessungen: measurement_results/edge_distortion_analysis.json
+Reproduzieren: /usr/bin/python3 CV_lab/Pictures/measurement_results/analyze_edge_distortion.py
+Kalibrierungsgrundlage (OpenCV, radiale/tangentiale Modelle und Messmuster):
+https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
+https://docs.opencv.org/4.x/d9/d0c/group__calib3d.html

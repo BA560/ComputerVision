@@ -1,0 +1,11 @@
+Coin:		Measurement [mm]:	Measuremtent [px]:
+
+Referenz	25,00mm			
+2€		25,71mm			
+1€		23,17mm			
+0,50€		24,15mm			
+0,20€		22,14mm			
+0,10€		19,64mm			
+0,05€		21,26mm			
+0,02€		18,76mm			
+0,01€		16,27mm			
